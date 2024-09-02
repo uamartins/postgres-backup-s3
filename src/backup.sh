@@ -36,16 +36,20 @@ rm "$local_file"
 echo "Backup complete."
 
 if [ -n "$BACKUP_KEEP_DAYS" ]; then
-  sec=$((86400*BACKUP_KEEP_DAYS))
-  date_from_remove=$(date -d "@$(($(date +%s) - sec))" +%Y-%m-%d)
-  backups_query="Contents[?LastModified<='${date_from_remove} 00:00:00'].{Key: Key}"
+  sec=$((86400 * BACKUP_KEEP_DAYS))
+  date_from_remove=$(date -u -d "@$(($(date +%s) - sec))" +%Y-%m-%dT%H:%M:%SZ)
 
   echo "Removing old backups from $S3_BUCKET..."
   aws $aws_args s3api list-objects \
     --bucket "${S3_BUCKET}" \
     --prefix "${S3_PREFIX}" \
-    --query "${backups_query}" \
+    --query "Contents[?LastModified<='${date_from_remove}'].Key" \
     --output text \
-    | xargs -n1 -t -I 'KEY' aws $aws_args s3 rm s3://"${S3_BUCKET}"/'KEY'
+    | tr '\t' '\n' \
+    | while IFS= read -r key; do
+        if [ -n "$key" ]; then
+          aws $aws_args s3 rm "s3://${S3_BUCKET}/${key}"
+        fi
+      done
   echo "Removal complete."
 fi
