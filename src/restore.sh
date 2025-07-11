@@ -35,11 +35,8 @@ if [ -n "$PASSPHRASE" ]; then
   rm db.dump.gpg
 fi
 
-# Verificar se o arquivo está comprimido
-if [[ "$key_suffix" == *.gz ]]; then
-  echo "Decompressing backup..."
-  gunzip db.dump.gz
-fi
+echo "Decompressing backup..."
+gunzip db.dump.gz
 
 conn_opts="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -d $POSTGRES_DATABASE"
 
