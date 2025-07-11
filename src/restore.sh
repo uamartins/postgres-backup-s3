@@ -8,7 +8,7 @@ source ./env.sh
 s3_uri_base="s3://${S3_BUCKET}/${S3_PREFIX}"
 
 if [ -z "$PASSPHRASE" ]; then
-  file_type=".dump"
+  file_type=".dump.gz"  # Assumir que está comprimido
 else
   file_type=".dump.gpg"
 fi
@@ -31,8 +31,14 @@ aws $aws_args s3 cp "${s3_uri_base}/${key_suffix}" "db${file_type}"
 
 if [ -n "$PASSPHRASE" ]; then
   echo "Decrypting backup..."
-  gpg --decrypt --batch --passphrase "$PASSPHRASE" db.dump.gpg > db.dump
+  gpg --decrypt --batch --passphrase "$PASSPHRASE" db.dump.gpg > db.dump.gz
   rm db.dump.gpg
+fi
+
+# Verificar se o arquivo está comprimido
+if [[ "$key_suffix" == *.gz ]]; then
+  echo "Decompressing backup..."
+  gunzip db.dump.gz
 fi
 
 conn_opts="-h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -d $POSTGRES_DATABASE"
