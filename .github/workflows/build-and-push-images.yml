@@ -11,6 +11,7 @@ jobs:
     strategy:
       matrix:
         include:
+          - { postgres: 11.22, alpine: '3.19' }
           - { postgres: 16, alpine: '3.23' }
           - { postgres: 17, alpine: '3.23' }
 
