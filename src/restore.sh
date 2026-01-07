@@ -5,6 +5,9 @@ set -o pipefail
 
 source ./env.sh
 
+# Cleanup temporary files
+rm -f db.dump db.dump.gz db.dump.gpg
+
 s3_uri_base="s3://${S3_BUCKET}/${S3_PREFIX}"
 
 if [ -z "$PASSPHRASE" ]; then

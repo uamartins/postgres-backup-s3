@@ -5,6 +5,9 @@ set -o pipefail
 
 source ./env.sh
 
+# Cleanup temporary files from previous runs to prevent "File exists" errors
+rm -f db.dump db.dump.gz db.dump.gz.gpg
+
 echo "Creating backup of $POSTGRES_DATABASE database..."
 pg_dump --format=custom \
         -h $POSTGRES_HOST \
