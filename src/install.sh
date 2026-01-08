@@ -11,6 +11,10 @@ apk add postgresql-client
 # install gpg
 apk add gnupg
 
+# install python and flask for api
+apk add python3 py3-pip
+pip install flask
+
 apk add aws-cli
 
 # install go-cron
