@@ -21,10 +21,12 @@ ENV S3_S3V4 'no'
 ENV SCHEDULE ''
 ENV PASSPHRASE ''
 ENV BACKUP_KEEP_DAYS ''
+ENV API_PORT 80
 
 ADD src/run.sh run.sh
 ADD src/env.sh env.sh
 ADD src/backup.sh backup.sh
 ADD src/restore.sh restore.sh
+ADD src/api.py api.py
 
 CMD ["sh", "run.sh"]

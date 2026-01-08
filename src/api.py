@@ -59,5 +59,5 @@ def health():
     return jsonify({"status": "healthy"}), 200
 
 if __name__ == '__main__':
-    port = int(os.environ.get('API_PORT', 8080))
+    port = int(os.environ.get('API_PORT', 80))
     app.run(host='0.0.0.0', port=port)

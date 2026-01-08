@@ -13,5 +13,5 @@ if [ -n "${SCHEDULE:-}" ]; then
 fi
 
 # Start the API server
-echo "Starting REST API on port 8080..."
+echo "Starting REST API on port ${API_PORT:-80}..."
 exec python3 api.py

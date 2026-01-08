@@ -4,7 +4,7 @@ This project now includes a REST API to trigger backup and restore operations on
 
 ## Overview
 
-The API listens on port `8080` by default. It allows you to trigger backups and restores programmatically without waiting for the schedule.
+The API listens on port `80` by default. It allows you to trigger backups and restores programmatically without waiting for the schedule.
 
 ## Endpoints
 
@@ -36,7 +36,7 @@ Triggers the `backup.sh` script immediately.
 
 **Example:**
 ```bash
-curl -X POST http://localhost:8080/backup
+curl -X POST http://localhost:80/backup
 ```
 
 ### 2. Trigger Restore
@@ -64,14 +64,14 @@ Triggers the `restore.sh` script.
 
 **Example (Latest):**
 ```bash
-curl -X POST http://localhost:8080/restore
+curl -X POST http://localhost:80/restore
 ```
 
 **Example (Specific Timestamp):**
 ```bash
 curl -X POST -H "Content-Type: application/json" \
      -d '{"timestamp": "2023-10-27T10:00:00"}' \
-     http://localhost:8080/restore
+     http://localhost:80/restore
 ```
 
 ### 3. Health Check
@@ -84,4 +84,4 @@ Simple health check endpoint.
 ## Configuration
 
 The API server runs automatically when the container starts.
-- **Port**: 8080 (configurable via `API_PORT` env var, default 8080)
+- **Port**: 80 (configurable via `API_PORT` env var, default 80)
