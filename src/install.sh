@@ -12,8 +12,7 @@ apk add postgresql-client
 apk add gnupg
 
 # install python and flask for api
-apk add python3 py3-pip
-pip install flask
+apk add python3 py3-flask
 
 apk add aws-cli
 
