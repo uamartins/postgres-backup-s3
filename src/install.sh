@@ -5,8 +5,10 @@ set -o pipefail
 
 apk update
 
-# install pg_dump
-apk add postgresql-client
+# install pg_dump/pg_restore do major pedido (PG_MAJOR). Versionado de propósito:
+# o client precisa ser >= a versão do servidor, e a tag da imagem deve refletir a
+# versão real. PG_MAJOR vazio cai no pacote default do Alpine (compat retroativa).
+apk add "postgresql${PG_MAJOR}-client"
 
 # install gpg
 apk add gnupg
