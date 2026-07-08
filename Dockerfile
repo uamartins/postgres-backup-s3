@@ -1,9 +1,13 @@
 ARG ALPINE_VERSION
 FROM alpine:${ALPINE_VERSION}
 ARG TARGETARCH
+# Major do Postgres client (pg_dump/pg_restore). Faz a tag da imagem bater com a
+# versão real do client, em vez de depender do default do Alpine (que muda entre
+# releases e fazia :16 e :17 virarem a mesma imagem).
+ARG PG_MAJOR
 
 ADD src/install.sh install.sh
-RUN sh install.sh && rm install.sh
+RUN PG_MAJOR="${PG_MAJOR}" sh install.sh && rm install.sh
 
 ENV POSTGRES_DATABASE ''
 ENV POSTGRES_HOST ''
